@@ -21,3 +21,14 @@ DB_PASSWORD=
 
 9) run `sail artisan optimize:clear` to clear cached bootstrap files
 
+10) run `sail artisan shield:setup` with the following answers:
+    11) Yes
+    12) No
+    13) Yes
+    14) super-admin
+    15) Yes
+    16) Yes
+    17) Policies & Permissions
+    18) Yes
+    19) Input the user ID for 'Admin User'
+
