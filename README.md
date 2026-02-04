@@ -1,21 +1,23 @@
 ## Run Locally
 
-1) Install dependencies using: `composer install`
+1) Install PHP and Laravel dependencies using: `composer install`
+2) Install JS dependencies using: `npm install`
+3) Run: `npm run build` once
 
-2) Create a .env file with: `cp .env.example .env`
+4) Create a .env file with: `cp .env.example .env`
 
-3) Generate an app key with: `php artisan key:generate`
+5) Generate an app key with: `php artisan key:generate`
 
-4) Populate .env vars:
+6) Populate .env vars:
 
 ```
 DB_USERNAME=
 DB_PASSWORD=
 ```
 
-5) Start development containers with: `sail up -d`
+7) Start development containers with: `sail up -d`
 
-6) Run `sail artisan migrate:fresh` to seed the database
+8) Run `sail artisan migrate:fresh` to seed the database
 
-7) run `sail artisan optimize:clear` to clear cached bootstrap files
+9) run `sail artisan optimize:clear` to clear cached bootstrap files
 
