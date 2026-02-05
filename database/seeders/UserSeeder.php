@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleEnum;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -11,22 +12,19 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        $testUser = User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-        $testUser->assignRole('tenant');
+        User::factory()->create([
+            'name' => 'Super Admin',
+            'email' => 'super@example.com',
+        ])->assignRole(RoleEnum::SUPER_ADMIN_ROLE);
 
-        $adminUser = User::factory()->create([
-            'name' => 'Admin User',
+        User::factory()->create([
+            'name' => 'Admin',
             'email' => 'admin@example.com',
-        ]);
-        $adminUser->assignRole('admin');
+        ])->assignRole(RoleEnum::ADMIN_ROLE);
 
-        $superAdminUser = User::factory()->create([
-            'name' => 'Super Admin User',
-            'email' => 'superadmin@example.com',
-        ]);
-        $superAdminUser->assignRole('super_admin');
+        User::factory()->create([
+            'name' => 'Tenant',
+            'email' => 'tenant@example.com',
+        ])->assignRole(RoleEnum::TENANT_ROLE);
     }
 }

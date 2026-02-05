@@ -16,8 +16,8 @@ enum RoleEnum: string implements HasLabel, HasColor
     {
         return match ($this) {
             self::SUPER_ADMIN_ROLE => 'danger',
-            self::ADMIN_ROLE => 'info',
-            self::TENANT_ROLE => 'success',
+            self::ADMIN_ROLE => 'success',
+            self::TENANT_ROLE => 'warning',
         };
     }
 

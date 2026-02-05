@@ -62,9 +62,9 @@ class AdminPanelProvider extends PanelProvider
                 FilamentDeveloperLoginsPlugin::make()
                     ->enabled(app()->environment('local'))
                     ->users([
-                        'Super' => 'superadmin@example.com',
+                        'Super' => 'super@example.com',
                         'Admin' => 'admin@example.com',
-                        'User' => 'test@example.com',
+                        'Tenant' => 'tenant@example.com',
                     ])
             ]);
     }
