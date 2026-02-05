@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use BezhanSalleh\FilamentShield\Support\Utils;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use BezhanSalleh\FilamentShield\Support\Utils;
 use Spatie\Permission\PermissionRegistrar;
 
 class ShieldSeeder extends Seeder
@@ -16,7 +16,7 @@ class ShieldSeeder extends Seeder
         $tenants = '[]';
         $users = '[]';
         $userTenantPivot = '[]';
-        $rolesWithPermissions = '[{"name":"super_admin","guard_name":"web","permissions":["ViewAny:Role","View:Role","Create:Role","Update:Role","Delete:Role","Restore:Role","ForceDelete:Role","ForceDeleteAny:Role","RestoreAny:Role","Replicate:Role","Reorder:Role","ViewAny:User","View:User","Create:User","Update:User","Delete:User","Restore:User","ForceDelete:User","ForceDeleteAny:User","RestoreAny:User","Replicate:User","Reorder:User"]},{"name":"Admin","guard_name":"web","permissions":[]},{"name":"Tenant","guard_name":"web","permissions":[]}]';
+        $rolesWithPermissions = '[{"name":"super_admin","guard_name":"web","permissions":["ViewAny:Role","View:Role","Create:Role","Update:Role","Delete:Role","Restore:Role","ForceDelete:Role","ForceDeleteAny:Role","RestoreAny:Role","Replicate:Role","Reorder:Role","ViewAny:User","View:User","Create:User","Update:User","Delete:User","Restore:User","ForceDelete:User","ForceDeleteAny:User","RestoreAny:User","Replicate:User","Reorder:User","ViewAny:WaitlistedUser","View:WaitlistedUser","Create:WaitlistedUser","Update:WaitlistedUser","Delete:WaitlistedUser","Restore:WaitlistedUser","ForceDelete:WaitlistedUser","ForceDeleteAny:WaitlistedUser","RestoreAny:WaitlistedUser","Replicate:WaitlistedUser","Reorder:WaitlistedUser"]},{"name":"Admin","guard_name":"web","permissions":[]},{"name":"Tenant","guard_name":"web","permissions":[]}]';
         $directPermissions = '[]';
 
         // 1. Seed tenants first (if present)

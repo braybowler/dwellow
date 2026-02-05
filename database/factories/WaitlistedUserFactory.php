@@ -17,7 +17,10 @@ class WaitlistedUserFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'type' => fake()->randomElement(['tenant', 'landlord', 'both']),
+            'number_of_properties' => fake()->randomElement(['1', '2-10', '10-50', '50+']),
         ];
     }
 }
