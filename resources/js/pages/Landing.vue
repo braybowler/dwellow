@@ -40,26 +40,40 @@
                 <h2 class="mb-12 text-center text-3xl font-bold">
                     Everything you need, nothing you don’t
                 </h2>
+                <div class="mb-10 flex justify-center">
+                    <div class="inline-flex rounded-2xl bg-slate-200 p-1">
+                        <button
+                            @click="audience = 'landlord'"
+                            class="rounded-xl px-4 py-2 text-sm font-medium transition"
+                            :class="
+                                audience === 'landlord'
+                                    ? 'bg-indigo-600 text-white shadow'
+                                    : 'text-slate-600 hover:text-slate-900'
+                            "
+                        >
+                            Landlord
+                        </button>
+
+                        <button
+                            @click="audience = 'tenant'"
+                            class="rounded-xl px-4 py-2 text-sm font-medium transition"
+                            :class="
+                                audience === 'tenant'
+                                    ? 'bg-indigo-600 text-white shadow'
+                                    : 'text-slate-600 hover:text-slate-900'
+                            "
+                        >
+                            Tenant
+                        </button>
+                    </div>
+                </div>
+
                 <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                     <FeatureCard
-                        title="Maintenance & Incident Reporting"
-                        description="Report issues in seconds, track progress, and keep everyone informed without endless emails or texts."
-                    />
-                    <FeatureCard
-                        title="Contracts & Agreements"
-                        description="Securely store, review, and access leases and documents whenever you need them."
-                    />
-                    <FeatureCard
-                        title="Digital Signing"
-                        description="Sign and send documents digitally — fast, legally sound, and paper-free."
-                    />
-                    <FeatureCard
-                        title="Reminders & Appointments"
-                        description="Never miss an inspection, payment, or renewal with smart reminders."
-                    />
-                    <FeatureCard
-                        title="Built-in Communication"
-                        description="Keep all tenant–landlord conversations in one place, organized and searchable."
+                        v-for="feature in activeFeatures"
+                        :key="feature.title"
+                        :title="feature.title"
+                        :description="feature.description"
                     />
                 </div>
             </div>
@@ -115,7 +129,7 @@
     </div>
 
     <div
-        v-if="flashToastMessage"
+        v-if="flashSuccessToastMessage"
         class="fixed inset-x-0 bottom-4 z-50 flex justify-center px-4"
     >
         <div
@@ -126,7 +140,27 @@
             </p>
 
             <button
-                @click="handleToastMessageDismissal"
+                @click="handleSuccessToastMessageDismissal"
+                class="rounded-lg bg-white/10 px-3 py-1 text-xs font-medium transition hover:bg-white/20"
+            >
+                Dismiss
+            </button>
+        </div>
+    </div>
+
+    <div
+        v-if="flashErrorToastMessage"
+        class="fixed inset-x-0 bottom-4 z-50 flex justify-center px-4"
+    >
+        <div
+            class="flex w-full max-w-md items-center justify-between gap-4 rounded-2xl bg-orange-400 px-5 py-4 text-white shadow-xl ring-1 ring-black/10 backdrop-blur"
+        >
+            <p class="text-sm font-medium">
+                Something went wrong. Please try again.
+            </p>
+
+            <button
+                @click="handleErrorToastMessageDismissal"
                 class="rounded-lg bg-white/10 px-3 py-1 text-xs font-medium transition hover:bg-white/20"
             >
                 Dismiss
@@ -144,24 +178,92 @@
 <script setup lang="ts">
 import Step from '@/components/dwellow/Step.vue';
 import FeatureCard from '@/components/dwellow/FeatureCard.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import WaitlistModal from '@/components/dwellow/WaitlistModal.vue';
 import { InertiaForm } from '@inertiajs/vue3';
 
 const showWaitListForm = ref(false);
-const flashToastMessage = ref(false);
+const flashSuccessToastMessage = ref(false);
+const flashErrorToastMessage = ref(false);
+
+const audience = ref<'landlord' | 'tenant'>('landlord');
+
+const features = {
+    landlord: [
+        {
+            title: 'Maintenance & Incident Reporting',
+            description:
+                'Receive and manage tenant issues quickly, track status, and keep records organized.',
+        },
+        {
+            title: 'Contracts & Agreements',
+            description:
+                'Store leases, addenda, and documents securely with easy access anytime.',
+        },
+        {
+            title: 'Digital Signing',
+            description:
+                'Send and sign lease documents digitally with tenants — fast and compliant.',
+        },
+        {
+            title: 'Reminders & Appointments',
+            description:
+                'Stay on top of inspections, renewals, and important property tasks.',
+        },
+        {
+            title: 'Built-in Communication',
+            description:
+                'Keep conversations with tenants centralized and searchable.',
+        },
+    ],
+
+    tenant: [
+        {
+            title: 'Maintenance & Incident Reporting',
+            description:
+                'Report issues in seconds and stay updated without chasing your landlord.',
+        },
+        {
+            title: 'Contracts & Agreements',
+            description:
+                'Access your lease and documents whenever you need them.',
+        },
+        {
+            title: 'Digital Signing',
+            description:
+                'Review and sign rental documents easily from any device.',
+        },
+        {
+            title: 'Reminders & Appointments',
+            description:
+                'Never miss inspections, payments, or important rental dates.',
+        },
+        {
+            title: 'Built-in Communication',
+            description:
+                'Message your landlord in one organized, reliable place.',
+        },
+    ],
+};
+
+const activeFeatures = computed(() => features[audience.value]);
 
 const handleWaitListClick = () => {
     showWaitListForm.value = true;
 };
-const handleToastMessageDismissal = () => {
-    flashToastMessage.value = false;
+const handleSuccessToastMessageDismissal = () => {
+    flashSuccessToastMessage.value = false;
+};
+
+const handleErrorToastMessageDismissal = () => {
+    flashErrorToastMessage.value = false;
 };
 
 const handleWaitListSubmit = (form: InertiaForm<any>) => {
     form.post('/waitlist', {
         preserveScroll: true,
-        onSuccess: () => flashToastMessage.value = true,
+        onSuccess: () => (flashSuccessToastMessage.value = true),
+        onError: () => (flashErrorToastMessage.value = true),
     });
 };
 </script>

@@ -6,7 +6,7 @@ use App\Http\Requests\WaitlistedUser\StoreWaitlistedUserRequest;
 use App\Models\WaitlistedUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Inertia\Inertia;
+use Throwable;
 
 class WaitlistedUserController extends Controller
 {
@@ -40,10 +40,11 @@ class WaitlistedUserController extends Controller
             ]);
 
             $waitlistedUser->save();
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             Log::error($th);
-
-            return to_route('landing');
+            return back()->withErrors([
+                'general' => 'Something went wrong. Please try again.'
+            ]);
         }
 
         return to_route('landing');
