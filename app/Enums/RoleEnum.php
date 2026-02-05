@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Htmlable;
 
 enum RoleEnum: string implements HasLabel, HasColor
 {
-    case SUPER_ADMIN_ROLE = 'super-admin';
+    case SUPER_ADMIN_ROLE = 'super_admin';
     case ADMIN_ROLE = 'admin';
     case TENANT_ROLE = 'tenant';
 
