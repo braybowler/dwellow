@@ -49,7 +49,7 @@
                         />
                     </div>
 
-                    <!-- Role -->
+                    <!-- Type -->
                     <div>
                         <p class="mb-2 text-sm font-medium text-slate-700">
                             I am a…
@@ -61,7 +61,7 @@
                                 <input
                                     type="radio"
                                     value="tenant"
-                                    v-model="form.role"
+                                    v-model="form.type"
                                 />
                                 Tenant
                             </label>
@@ -71,7 +71,7 @@
                                 <input
                                     type="radio"
                                     value="landlord"
-                                    v-model="form.role"
+                                    v-model="form.type"
                                 />
                                 Landlord
                             </label>
@@ -81,14 +81,14 @@
                                 <input
                                     type="radio"
                                     value="both"
-                                    v-model="form.role"
+                                    v-model="form.type"
                                 />
                                 Both
                             </label>
                         </div>
                     </div>
 
-                    <!-- Properties -->
+                    <!-- Number of Properties -->
                     <div>
                         <p class="mb-2 text-sm font-medium text-slate-700">
                             Number of properties
@@ -100,7 +100,7 @@
                                 <input
                                     type="radio"
                                     value="1"
-                                    v-model="form.properties"
+                                    v-model="form.number_of_properties"
                                 />
                                 1
                             </label>
@@ -110,7 +110,7 @@
                                 <input
                                     type="radio"
                                     value="2-10"
-                                    v-model="form.properties"
+                                    v-model="form.number_of_properties"
                                 />
                                 2–10
                             </label>
@@ -120,7 +120,7 @@
                                 <input
                                     type="radio"
                                     value="10-50"
-                                    v-model="form.properties"
+                                    v-model="form.number_of_properties"
                                 />
                                 10–50
                             </label>
@@ -130,7 +130,7 @@
                                 <input
                                     type="radio"
                                     value="50+"
-                                    v-model="form.properties"
+                                    v-model="form.number_of_properties"
                                 />
                                 50+
                             </label>
@@ -166,24 +166,25 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, computed } from 'vue';
+import { computed } from 'vue';
+import { useForm } from '@inertiajs/vue3'
 
 defineProps<{ open: boolean }>();
 const emit = defineEmits(['close', 'submit']);
 
-const form = reactive({
+const form = useForm({
     name: '',
     email: '',
-    role: '',
-    properties: '',
+    type: '',
+    number_of_properties: '',
 });
 
 const isValid = computed(() => {
     return (
         form.name.trim().length > 0 &&
         form.email.trim().length > 0 &&
-        form.role.length > 0 &&
-        form.properties.length > 0
+        form.type.length > 0 &&
+        form.number_of_properties.length > 0
     );
 });
 

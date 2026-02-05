@@ -114,6 +114,26 @@
         </footer>
     </div>
 
+    <div
+        v-if="flashToastMessage"
+        class="fixed inset-x-0 bottom-4 z-50 flex justify-center px-4"
+    >
+        <div
+            class="flex w-full max-w-md items-center justify-between gap-4 rounded-2xl bg-indigo-600 px-5 py-4 text-white shadow-xl ring-1 ring-black/10 backdrop-blur"
+        >
+            <p class="text-sm font-medium">
+                You're on the waitlist 🎉 We'll be in touch soon.
+            </p>
+
+            <button
+                @click="handleToastMessageDismissal"
+                class="rounded-lg bg-white/10 px-3 py-1 text-xs font-medium transition hover:bg-white/20"
+            >
+                Dismiss
+            </button>
+        </div>
+    </div>
+
     <WaitlistModal
         :open="showWaitListForm"
         @close="showWaitListForm = false"
@@ -126,20 +146,22 @@ import Step from '@/components/dwellow/Step.vue';
 import FeatureCard from '@/components/dwellow/FeatureCard.vue';
 import { ref } from 'vue';
 import WaitlistModal from '@/components/dwellow/WaitlistModal.vue';
+import { InertiaForm } from '@inertiajs/vue3';
 
 const showWaitListForm = ref(false);
+const flashToastMessage = ref(false);
 
 const handleWaitListClick = () => {
     showWaitListForm.value = true;
 };
+const handleToastMessageDismissal = () => {
+    flashToastMessage.value = false;
+};
 
-const handleWaitListSubmit = (data: {
-    name: string;
-    email: string;
-    role: string;
-    properties: string;
-}) => {
-    console.log('Waitlist submission:', data);
-    // POST to API / store / analytics hook
+const handleWaitListSubmit = (form: InertiaForm<any>) => {
+    form.post('/waitlist', {
+        preserveScroll: true,
+        onSuccess: () => flashToastMessage.value = true,
+    });
 };
 </script>
