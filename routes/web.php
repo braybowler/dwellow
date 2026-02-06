@@ -10,9 +10,4 @@ Route::get('/', function () {
 
 Route::resource('waitlist', WaitlistedUserController::class)->only('store');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
 require __DIR__.'/settings.php';
