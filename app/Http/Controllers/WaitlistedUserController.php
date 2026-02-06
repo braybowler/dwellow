@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class WaitlistedUserController extends Controller
+class WaitlistedUserController
 {
     /**
      * Display a listing of the resource.
